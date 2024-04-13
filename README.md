@@ -1,3 +1,6 @@
+- Dockerize the application
+
+
 # About
 This is the back-end of a simple forum application.
 
