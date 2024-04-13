@@ -1,0 +1,2 @@
+- Dockerize the application
+- 
