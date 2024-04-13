@@ -1,1 +1,2 @@
-# mse2024-forum-be
+- Dockerize the application
+- 
