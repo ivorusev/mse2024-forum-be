@@ -18,8 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// TODO: add and configure test containers
-// TODO: configure properties for the tests
 // TODO: extends the tests
 @SpringBootTest
 @AutoConfigureMockMvc

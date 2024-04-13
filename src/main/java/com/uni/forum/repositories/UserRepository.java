@@ -1,8 +1,7 @@
-package com.uni.forum.services;
+package com.uni.forum.repositories;
 
 import com.uni.forum.domain.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 

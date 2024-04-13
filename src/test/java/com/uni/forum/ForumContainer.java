@@ -2,6 +2,9 @@ package com.uni.forum;
 
 import org.testcontainers.containers.PostgreSQLContainer;
 
+/**
+ * TODO: document
+ */
 public class ForumContainer extends PostgreSQLContainer<ForumContainer> {
     private static final String IMAGE_VERSION = "postgres:16.2.1";
     private static ForumContainer container;

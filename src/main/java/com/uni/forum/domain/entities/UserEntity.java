@@ -17,11 +17,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-public class UserEntity {
-
-    @Id
-    @GeneratedValue
-    private long id;
+public class UserEntity extends BaseEntity {
 
     @Column(unique = true)
     private String username;
@@ -30,13 +26,4 @@ public class UserEntity {
     private String name;
     private String role;
 
-    @Column
-    @Temporal(TemporalType.DATE)
-    @CreationTimestamp
-    private Date created;
-
-    @Column
-    @Temporal(TemporalType.DATE)
-    @UpdateTimestamp
-    private Date modified;
 }
