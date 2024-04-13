@@ -1,10 +1,6 @@
 package com.uni.forum.domain.entities;
 
-import java.util.Date;
-import java.util.Set;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,14 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class TopicEntity extends BaseEntity {
+public class ReplyEntity extends BaseEntity {
 
   @Column(unique = true)
-  private String title;
+  private String text;
 
   private String username;
 
-  @Column
-  @OneToMany(mappedBy = "topic")
-  private Set<ReplyEntity> replies;
+  @JoinColumn
+  @ManyToOne
+  private TopicEntity topic;
 }
