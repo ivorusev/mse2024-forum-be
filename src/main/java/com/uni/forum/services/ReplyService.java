@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 public class ReplyService {
     // TODO: Stanislav will review and fix (and break everything)
 
+
+
     private final ReplyRepository replyRepository;
     private final ReplyPagingRepository pagingRepository;
     private final TopicRepository topicRepository;
