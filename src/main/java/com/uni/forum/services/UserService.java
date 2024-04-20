@@ -4,6 +4,7 @@ import com.uni.forum.domain.coverters.UserConverter;
 import com.uni.forum.domain.dtos.UserDto;
 import com.uni.forum.domain.entities.UserEntity;
 import com.uni.forum.exceptions.ExistingEntityException;
+import com.uni.forum.exceptions.NonExistingEntityException;
 import com.uni.forum.repositories.UserPagingRepository;
 import com.uni.forum.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,11 +45,7 @@ public class UserService {
   }
 
   public UserDto updateUser(String username, UserDto user) {
-    Optional<UserEntity> byUsername = userRepository.findByUsername(user.getUsername());
-    if (byUsername.isEmpty()) {
-      // TODO: throw an error
-    }
-    UserEntity userEntity = byUsername.get();
+    UserEntity userEntity = getUserOrThrowException(username, userRepository);
     UserEntity updatedEntity = converter.toEntity(user);
     updatedEntity.setId(userEntity.getId());
     updatedEntity.setCreated(userEntity.getCreated());
@@ -61,4 +58,12 @@ public class UserService {
     Page<UserEntity> all = pagingRepository.findAll(PageRequest.of(page, pageSize));
     return all.getContent().stream().map(converter::toDto).collect(Collectors.toList());
   }
+
+  public static UserEntity getUserOrThrowException (String username, UserRepository userRepository) {
+    Optional<UserEntity> user = userRepository.findByUsername(username);
+    if (user.isEmpty()){
+        throw new NonExistingEntityException();
+    }
+    return user.get();
+}
 }

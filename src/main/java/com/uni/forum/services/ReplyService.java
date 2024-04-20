@@ -4,13 +4,15 @@ import com.uni.forum.domain.coverters.ReplyConverter;
 import com.uni.forum.domain.dtos.ReplyDto;
 import com.uni.forum.domain.entities.ReplyEntity;
 import com.uni.forum.domain.entities.TopicEntity;
+import com.uni.forum.domain.entities.UserEntity;
 import com.uni.forum.exceptions.NonExistingEntityException;
 import com.uni.forum.repositories.ReplyPagingRepository;
 import com.uni.forum.repositories.ReplyRepository;
 import com.uni.forum.repositories.TopicRepository;
+import com.uni.forum.repositories.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +23,21 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ReplyService {
-    // TODO: Stanislav will review and fix
+    // TODO: Stanislav will review and fix (and break everything)
 
     private final ReplyRepository replyRepository;
     private final ReplyPagingRepository pagingRepository;
     private final TopicRepository topicRepository;
+    private final UserRepository userRepository;
     private final ReplyConverter converter;
 
     public ReplyDto persist(ReplyDto dto) {
         TopicEntity topicEntity = getTopicOrThrowException(dto.getTopicId());
+        UserEntity userEntity = UserService.getUserOrThrowException(dto.getUsername(), userRepository);
+
         ReplyEntity entity = converter.toEntity(dto);
         entity.setTopic(topicEntity);
+        entity.setUser(userEntity);
         ReplyEntity savedEntity = replyRepository.save(entity);
         return converter.toDto(savedEntity);
     }
