@@ -2,10 +2,8 @@ package com.uni.forum.services;
 
 import com.uni.forum.domain.coverters.TopicConverter;
 import com.uni.forum.domain.dtos.TopicDto;
-import com.uni.forum.domain.entities.ReplyEntity;
 import com.uni.forum.domain.entities.TopicEntity;
 import com.uni.forum.domain.entities.UserEntity;
-import com.uni.forum.repositories.ReplyRepository;
 import com.uni.forum.repositories.TopicPagingRepository;
 import com.uni.forum.repositories.TopicRepository;
 import com.uni.forum.repositories.UserRepository;
@@ -14,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +24,9 @@ import java.util.stream.Collectors;
 public class TopicService {
 
     private final TopicRepository repository;
-    private final TopicPagingRepository pagingRepository;
     private final TopicConverter converter;
     private final UserRepository userRepository;
+    private final TopicPagingRepository pagingRepository;
 
     public TopicDto persist(TopicDto topic) {
         UserEntity user = UserService.getUserOrThrowException(topic.getUsername(), userRepository);
@@ -51,5 +50,10 @@ public class TopicService {
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created").descending());
         List<TopicEntity> allByUsername = pagingRepository.findByUsername(username, pageRequest);
         return allByUsername.stream().map(converter::toDto).collect(Collectors.toList());
+    }
+
+    public List<TopicDto> getAllTopics(int page, int pageSize) {
+        Page<TopicEntity> all = pagingRepository.findAll(PageRequest.of(page, pageSize));
+        return all.getContent().stream().map(converter::toDto).collect(Collectors.toList());
     }
 }

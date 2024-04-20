@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/topics")
 public class TopicRest {
-  // TODO: Yordan
   private final Logger LOGGER = LoggerFactory.getLogger(UserRest.class);
 
   private final TopicService topicService;
+
   @PostMapping(
           consumes = MediaType.APPLICATION_JSON_VALUE,
           produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,16 +42,23 @@ public class TopicRest {
 
   // TODO: implement
   @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public String getTopic(@PathVariable("id") Long id) {
-    topicService.getTopic(id);
-    throw new UnsupportedOperationException();
+  public ResponseEntity<TopicDto> getTopic(@PathVariable("id") Long id) {
+    return ResponseEntity.ok(topicService.getTopic(id)); // this throws exception when not found!
   }
 
-  // TODO: implement
-  // TODO: implement pagination
-  @GetMapping
-  public String getAllTopics() {
-    throw new UnsupportedOperationException();
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<TopicDto>> getAllTopics(
+          @RequestParam(value = "page", required = false) Integer page,
+          @RequestParam(value = "pageSize", required = false) Integer pageSize
+  ) {
+    if (page == null) {
+      page = 0;
+    }
+
+    if (pageSize == null) {
+      pageSize = 10; // Default return 10 results
+    }
+    return ResponseEntity.ok(topicService.getAllTopics(page, pageSize));
   }
 
   // TODO: implement update topic
