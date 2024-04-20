@@ -5,6 +5,7 @@ import com.uni.forum.domain.dtos.UserDto;
 import com.uni.forum.exceptions.ExistingEntityException;
 import com.uni.forum.services.TopicService;
 import jakarta.transaction.NotSupportedException;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.slf4j.Logger;
@@ -18,21 +19,32 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/topics")
 public class TopicRest {
-
+  // TODO: Yordan
   private final Logger LOGGER = LoggerFactory.getLogger(UserRest.class);
 
   private final TopicService topicService;
   @PostMapping(
           consumes = MediaType.APPLICATION_JSON_VALUE,
           produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<TopicDto> createUser(@RequestBody TopicDto topic) {
+  public ResponseEntity<TopicDto> createTopic(@RequestBody TopicDto topic) {
     TopicDto persist = topicService.persist(topic);
     return ResponseEntity.ok(persist);
   }
 
-  // TODO: implements
+  // TODO: implement
+  @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public String getTopic(@PathVariable("id") Long id) {
+    topicService.getTopic(id);
+    throw new UnsupportedOperationException();
+  }
+
+  // TODO: implement
+  // TODO: implement pagination
   @GetMapping
   public String getAllTopics() {
     throw new UnsupportedOperationException();
   }
+
+  // TODO: implement update topic
+
 }

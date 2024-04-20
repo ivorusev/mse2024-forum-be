@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class TopicDto {
 
+    private long id;
     private String title;
     private String username;
     private Date dateCreated;

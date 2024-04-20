@@ -2,6 +2,7 @@ package com.uni.forum.api;
 
 import com.uni.forum.domain.dtos.ReplyDto;
 import com.uni.forum.domain.dtos.TopicDto;
+import com.uni.forum.domain.dtos.UserDto;
 import com.uni.forum.services.ReplyService;
 import com.uni.forum.services.TopicService;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/replies")
 public class ReplyRest {
 
+  // TODO: Kristian will fix it
   private final Logger LOGGER = LoggerFactory.getLogger(UserRest.class);
 
   private final ReplyService replyService;
@@ -23,8 +27,19 @@ public class ReplyRest {
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<ReplyDto> createUser(@RequestBody ReplyDto reply) {
+  public ResponseEntity<ReplyDto> createReply(@RequestBody ReplyDto reply) {
     ReplyDto persist = replyService.persist(reply);
     return ResponseEntity.ok(persist);
   }
+
+  @GetMapping(path = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<ReplyDto>> getReplyByTopic(
+          @PathVariable Long topicId,
+          @RequestParam(value = "page", required = false) Integer page,
+          @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+    // TODO: add check for NULL for page and pageSize
+    return ResponseEntity.ok(replyService.getAllRepliesByTopic(topicId, page, pageSize));
+  }
+
+  // TODO: update reply method
 }

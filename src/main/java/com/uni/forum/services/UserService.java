@@ -52,8 +52,8 @@ public class UserService {
     UserEntity updatedEntity = converter.toEntity(user);
     updatedEntity.setId(userEntity.getId());
     updatedEntity.setCreated(userEntity.getCreated());
-    userRepository.save(updatedEntity);
-    return null;
+    UserEntity save = userRepository.save(updatedEntity);
+    return converter.toDto(save);
   }
 
   public List<UserDto> getAllUsers(int page, int pageSize) {

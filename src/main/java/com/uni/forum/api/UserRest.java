@@ -28,7 +28,7 @@ public class UserRest {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
     LOGGER.info("test {}", user.getEmail());
-    UserDto persist = new UserDto();
+    UserDto persist;
     try {
       persist = userService.persist(user);
     } catch (ExistingEntityException e) {
@@ -47,15 +47,14 @@ public class UserRest {
   @PutMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDto> updateUser(
       @PathVariable String username, @RequestBody UserDto user) {
-    UserDto updatedUser = userService.updateUser(username, user);
-    return ResponseEntity.ok(userService.findByEmail(username));
+    return ResponseEntity.ok(userService.updateUser(username, user));
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<UserDto>> getAllUsers(
       @RequestParam(value = "page", required = false) Integer page,
       @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-    // TODO: add check
+    // TODO: add check for NULL page and pageSize
     return ResponseEntity.ok(userService.getAllUsers(page, pageSize));
   }
 
