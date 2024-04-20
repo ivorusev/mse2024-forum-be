@@ -38,7 +38,7 @@ public class TopicRest {
           @RequestParam(value = "pageSize", required = false) Integer pageSize
   ) {
     if ( page == null ) {
-      throw new IllegalArgumentException("No page index provided");
+      page = 0;
     }
 
     if ( pageSize == null )
@@ -48,5 +48,6 @@ public class TopicRest {
   }
 
   // TODO: implement update topic
+
 
 }
