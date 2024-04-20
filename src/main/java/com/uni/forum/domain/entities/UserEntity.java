@@ -1,16 +1,11 @@
 package com.uni.forum.domain.entities;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
+import java.util.Set;
 
 // TODO: create a base entity that contain date created, date modified, id
 @NoArgsConstructor
@@ -26,4 +21,11 @@ public class UserEntity extends BaseEntity {
     private String name;
     private String role;
 
+    @Column
+    @OneToMany(mappedBy = "user")
+    private Set<ReplyEntity> replies;
+
+    @Column
+    @OneToMany(mappedBy = "user")
+    private Set<TopicEntity> topics;
 }

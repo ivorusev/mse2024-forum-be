@@ -19,4 +19,8 @@ public class ReplyEntity extends BaseEntity {
   @JoinColumn
   @ManyToOne
   private TopicEntity topic;
+
+  @JoinColumn
+  @ManyToOne
+  private UserEntity user;
 }

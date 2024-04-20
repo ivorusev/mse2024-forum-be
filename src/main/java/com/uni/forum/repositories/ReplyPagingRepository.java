@@ -2,7 +2,6 @@ package com.uni.forum.repositories;
 
 import com.uni.forum.domain.entities.ReplyEntity;
 import com.uni.forum.domain.entities.TopicEntity;
-import com.uni.forum.domain.entities.UserEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
