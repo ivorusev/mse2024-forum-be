@@ -1,7 +1,7 @@
 package com.uni.forum.repositories;
 
 import com.uni.forum.domain.entities.TopicEntity;
-import com.uni.forum.domain.entities.UserEntity;
+
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

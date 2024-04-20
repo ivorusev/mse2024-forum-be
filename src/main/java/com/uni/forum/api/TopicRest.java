@@ -3,13 +3,14 @@ package com.uni.forum.api;
 import com.uni.forum.domain.dtos.TopicDto;
 import com.uni.forum.services.TopicService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +28,19 @@ public class TopicRest {
     return ResponseEntity.ok(persist);
   }
 
+  @GetMapping(path = "/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<TopicDto>> getReplyByTopic(
+          @PathVariable String username,
+          @RequestParam(value = "page", required = false) Integer page,
+          @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+    return ResponseEntity.ok(topicService.getAllTopicsByUsername(
+      username,
+      page == null ? 0 : page,
+      pageSize == null ? 5 : pageSize
+    ));
+  }
+
+  // TODO: implement
   @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TopicDto> getTopic(@PathVariable("id") Long id) {
     return ResponseEntity.ok(topicService.getTopic(id)); // this throws exception when not found!
