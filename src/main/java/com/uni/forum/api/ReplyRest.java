@@ -1,10 +1,7 @@
 package com.uni.forum.api;
 
 import com.uni.forum.domain.dtos.ReplyDto;
-import com.uni.forum.domain.dtos.TopicDto;
-import com.uni.forum.domain.dtos.UserDto;
 import com.uni.forum.services.ReplyService;
-import com.uni.forum.services.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/replies")
 public class ReplyRest {
-
-  // TODO: Kristian will fix it
   private final Logger LOGGER = LoggerFactory.getLogger(UserRest.class);
 
   private final ReplyService replyService;
@@ -31,15 +26,28 @@ public class ReplyRest {
     ReplyDto persist = replyService.persist(reply);
     return ResponseEntity.ok(persist);
   }
-
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<ReplyDto>> getAllReplies(
+          @RequestParam(value = "page", required = false) Integer page,
+          @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+    if(page == null && pageSize == null)
+      return ResponseEntity.ok(replyService.getAllReplies(0, 5));
+    else
+      return ResponseEntity.ok(replyService.getAllReplies(page, pageSize));
+  }
   @GetMapping(path = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<ReplyDto>> getReplyByTopic(
           @PathVariable Long topicId,
           @RequestParam(value = "page", required = false) Integer page,
           @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-    // TODO: add check for NULL for page and pageSize
-    return ResponseEntity.ok(replyService.getAllRepliesByTopic(topicId, page, pageSize));
+    if(page == null && pageSize == null)
+      return ResponseEntity.ok(replyService.getAllRepliesByTopic(topicId, 0, 5));
+    else
+      return ResponseEntity.ok(replyService.getAllRepliesByTopic(topicId, page, pageSize));
   }
-
-  // TODO: update reply method
+  @PutMapping(path = "/{replyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<ReplyDto> updateReply(
+          @PathVariable Long replyId, @RequestBody ReplyDto reply) {
+    return ResponseEntity.ok(replyService.updateUser(replyId, reply));
+  }
 }
