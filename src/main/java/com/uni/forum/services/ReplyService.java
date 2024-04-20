@@ -10,7 +10,6 @@ import com.uni.forum.repositories.ReplyRepository;
 import com.uni.forum.repositories.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ReplyService {
-    // TODO: Stanislav will review and fix
+    // TODO: Stanislav will review and fix (and break everything)
 
     private final ReplyRepository replyRepository;
     private final ReplyPagingRepository pagingRepository;
