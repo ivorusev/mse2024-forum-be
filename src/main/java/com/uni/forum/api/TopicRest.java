@@ -1,19 +1,15 @@
 package com.uni.forum.api;
 
 import com.uni.forum.domain.dtos.TopicDto;
-import com.uni.forum.domain.dtos.UserDto;
-import com.uni.forum.exceptions.ExistingEntityException;
 import com.uni.forum.services.TopicService;
-import jakarta.transaction.NotSupportedException;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,11 +32,19 @@ public class TopicRest {
     return ResponseEntity.ok(topicService.getTopic(id)); // this throws exception when not found!
   }
 
-  // TODO: implement
-  // TODO: implement pagination
-  @GetMapping
-  public String getAllTopics() {
-    throw new UnsupportedOperationException();
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<TopicDto>> getAllTopics(
+          @RequestParam(value = "page", required = false) Integer page,
+          @RequestParam(value = "pageSize", required = false) Integer pageSize
+  ) {
+    if ( page == null ) {
+      throw new IllegalArgumentException("No page index provided");
+    }
+
+    if ( pageSize == null )
+      pageSize = 10; // Default return 10 results
+
+    return ResponseEntity.ok(topicService.getAllTopics(page, pageSize));
   }
 
   // TODO: implement update topic
