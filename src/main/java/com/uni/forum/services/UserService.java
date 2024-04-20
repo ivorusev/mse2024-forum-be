@@ -53,13 +53,6 @@ public class UserService {
     UserEntity updatedEntity = converter.toEntity(user);
     updatedEntity.setId(userEntity.getId());
 
-    // TODO: When authentication and authorization is implemented
-    /*
-    if(loggedUser.getRole() == UserRole.ADMINISTRATOR){
-      updatedEntity.setRole(userEntity.getRole());
-    }
-    */
-
     updatedEntity.setCreated(userEntity.getCreated());
     UserEntity save = userRepository.save(updatedEntity);
     return converter.toDto(save);

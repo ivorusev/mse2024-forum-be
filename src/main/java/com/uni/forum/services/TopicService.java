@@ -34,14 +34,4 @@ public class TopicService {
         TopicEntity topicEntity = topic.get();
         return converter.toDto(topicEntity);
     }
-
-    // TODO: Edit topic user role logic
-    // TODO: When authentication and authorization is implemented
-    /*
-    if(loggedUser.getRole() == UserRole.ADMINISTRATOR ||
-       loggedUser.getRole() == UserRole.Moderator ||
-       loggedUser.getId() == topic.userId){
-      TopicEntity save = topicRepository.save(updatedEntity);
-    }
-    */
 }
