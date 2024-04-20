@@ -37,17 +37,16 @@ public class TopicRest {
           @RequestParam(value = "page", required = false) Integer page,
           @RequestParam(value = "pageSize", required = false) Integer pageSize
   ) {
-    if ( page == null ) {
+    if (page == null) {
       page = 0;
     }
 
-    if ( pageSize == null )
+    if (pageSize == null) {
       pageSize = 10; // Default return 10 results
-
+    }
     return ResponseEntity.ok(topicService.getAllTopics(page, pageSize));
   }
 
   // TODO: implement update topic
-
 
 }
