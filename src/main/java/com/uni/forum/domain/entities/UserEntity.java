@@ -1,18 +1,14 @@
 package com.uni.forum.domain.entities;
 
+import com.uni.forum.domain.enums.UserRole;
 import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 
-// TODO: create a base entity that contain date created, date modified, id
 @NoArgsConstructor
 @Getter
 @Setter
@@ -24,6 +20,7 @@ public class UserEntity extends BaseEntity {
     private String email;
     private String password;
     private String name;
-    private String role;
+    @Enumerated(EnumType.ORDINAL)
+    private UserRole role;
 
 }

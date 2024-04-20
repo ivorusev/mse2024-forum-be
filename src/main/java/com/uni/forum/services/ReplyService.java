@@ -10,7 +10,6 @@ import com.uni.forum.repositories.ReplyRepository;
 import com.uni.forum.repositories.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -50,4 +49,15 @@ public class ReplyService {
         }
         return topic.get();
     }
+
+    // TODO: Edit topic user role logic
+    // TODO: When authentication and authorization is implemented
+    /*
+    if(loggedUser.getRole() == UserRole.ADMINISTRATOR ||
+       loggedUser.getRole() == UserRole.Moderator ||
+       loggedUser.getId() == topic.userId){
+      ReplyEntity save = replyRepository.save(updatedEntity);
+    }
+    */
+
 }

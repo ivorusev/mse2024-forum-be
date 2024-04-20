@@ -3,6 +3,7 @@ package com.uni.forum.services;
 import com.uni.forum.domain.coverters.UserConverter;
 import com.uni.forum.domain.dtos.UserDto;
 import com.uni.forum.domain.entities.UserEntity;
+import com.uni.forum.domain.enums.UserRole;
 import com.uni.forum.exceptions.ExistingEntityException;
 import com.uni.forum.repositories.UserPagingRepository;
 import com.uni.forum.repositories.UserRepository;
@@ -51,6 +52,14 @@ public class UserService {
     UserEntity userEntity = byUsername.get();
     UserEntity updatedEntity = converter.toEntity(user);
     updatedEntity.setId(userEntity.getId());
+
+    // TODO: When authentication and authorization is implemented
+    /*
+    if(loggedUser.getRole() == UserRole.ADMINISTRATOR){
+      updatedEntity.setRole(userEntity.getRole());
+    }
+    */
+
     updatedEntity.setCreated(userEntity.getCreated());
     UserEntity save = userRepository.save(updatedEntity);
     return converter.toDto(save);

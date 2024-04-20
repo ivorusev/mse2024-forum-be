@@ -1,5 +1,6 @@
 package com.uni.forum.domain.dtos;
 
+import com.uni.forum.domain.enums.UserRole;
 import lombok.*;
 
 @Getter
@@ -9,10 +10,9 @@ import lombok.*;
 public class UserDto {
 
     private String username;
-    // TODO: make email unique
     private String email;
     private String password;
     private String name;
-    private String role;
+    private UserRole role;
 
 }
