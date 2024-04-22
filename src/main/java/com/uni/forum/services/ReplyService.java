@@ -12,6 +12,7 @@ import com.uni.forum.repositories.TopicRepository;
 import com.uni.forum.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -49,11 +50,30 @@ public class ReplyService {
         return allByTopic.stream().map(converter::toDto).collect(Collectors.toList());
     }
 
+    public List<ReplyDto> getAllReplies(Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created").descending());
+        Page<ReplyEntity> all = pagingRepository.findAll(pageRequest);
+        return all.getContent().stream().map(converter::toDto).collect(Collectors.toList());
+    }
+
     private TopicEntity getTopicOrThrowException(Long id) {
         Optional<TopicEntity> topic = topicRepository.findById(id);
         if (topic.isEmpty()){
             throw new NonExistingEntityException();
         }
         return topic.get();
+    }
+
+    public ReplyDto updateUser(long replyId, ReplyDto reply) {
+        Optional<ReplyEntity> byiD = replyRepository.findById(replyId);
+        if (byiD.isEmpty()) {
+            throw new IllegalArgumentException(  "Reply not found: " + replyId);
+        }
+        ReplyEntity replyEntity = byiD.get();
+        ReplyEntity updatedEntity = converter.toEntity(reply);
+        updatedEntity.setId(replyEntity.getId());
+        updatedEntity.setCreated(replyEntity.getCreated());
+        ReplyEntity save = replyRepository.save(updatedEntity);
+        return converter.toDto(save);
     }
 }
