@@ -67,4 +67,13 @@ public class TopicService {
         Page<TopicEntity> allTopics = topicPagingRepository.findAll(pageRequest);
         return allTopics.getContent().stream().map(topicConverter::toDto).collect(Collectors.toList());
     }
+
+    public List<TopicDto> getAllTopicsByUsername(String username, int page, int pageSize) {
+        logger.trace("Entered method TopicService.getAllTopicsByUsername()");
+
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created").descending());
+        List<TopicEntity> allTopics = topicPagingRepository.findByUsername(username, pageRequest);
+        return allTopics.stream().map(topicConverter::toDto).collect(Collectors.toList());
+    }
+
 }
