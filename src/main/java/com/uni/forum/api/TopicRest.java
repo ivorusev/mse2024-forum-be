@@ -47,9 +47,6 @@ public class TopicRest {
     return ResponseEntity.ok(topicService.getAllTopics(page, pageSize));
   }
 
-  @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<TopicDto> updateUser(
-          @PathVariable("id") Long id, @RequestBody TopicDto user) {
-    return ResponseEntity.ok(topicService.updateTopic(id, user));
-  }
+  // TODO: implement update topic
+
 }
