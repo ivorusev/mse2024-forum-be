@@ -3,7 +3,6 @@ package com.uni.forum.services;
 import com.uni.forum.domain.coverters.TopicConverter;
 import com.uni.forum.domain.dtos.TopicDto;
 import com.uni.forum.domain.entities.TopicEntity;
-import com.uni.forum.exceptions.NonExistingEntityException;
 import com.uni.forum.repositories.TopicPagingRepository;
 import com.uni.forum.repositories.TopicRepository;
 import lombok.RequiredArgsConstructor;
@@ -67,30 +66,5 @@ public class TopicService {
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created").descending());
         Page<TopicEntity> allTopics = topicPagingRepository.findAll(pageRequest);
         return allTopics.getContent().stream().map(topicConverter::toDto).collect(Collectors.toList());
-    }
-
-    public TopicDto updateTopic(Long id, TopicDto newTopicDto) {
-        Optional<TopicEntity> foundTopicEntity = repository.findById(id);
-
-        if (foundTopicEntity.isEmpty()) {
-            throw new NonExistingEntityException();
-        }
-        TopicEntity topicEntity = foundTopicEntity.get();
-        TopicEntity newTopic = converter.toEntity(newTopicDto);
-
-        if ( newTopic.getUsername() == null && newTopic.getTitle() == null) {
-            throw new IllegalArgumentException(); // At least one of the optional args is present
-        }
-        // Keep original topic marking fields
-        newTopic.setId(topicEntity.getId());
-        newTopic.setCreated(topicEntity.getCreated());
-        if (newTopic.getUsername() == null) {
-            newTopic.setUsername(topicEntity.getUsername());
-        }
-        if (newTopic.getTitle() == null) {
-            newTopic.setTitle(topicEntity.getTitle());
-        }
-
-        return converter.toDto(repository.save(newTopic));
     }
 }
