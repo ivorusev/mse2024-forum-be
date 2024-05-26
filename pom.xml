@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>com.uni</groupId>
-	<artifactId>forum</artifactId>
+	<artifactId>forum-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>forum</name>
 	<description>This is a backend for a forum</description>
