@@ -41,7 +41,7 @@ public class UserRest {
 
   @GetMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDto> getUser(@PathVariable String username) {
-    return ResponseEntity.ok(userService.findByEmail(username));
+    return ResponseEntity.ok(userService.findByUsername(username));
   }
 
   @PutMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
